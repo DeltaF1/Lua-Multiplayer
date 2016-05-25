@@ -1,4 +1,5 @@
-// Taken from Gabriel Gambetta's excellent article, used as a reference for my own implementations
+// Taken from Gabriel Gambetta's excellent article at http://www.gabrielgambetta.com/fpm_live.html
+// Used as a reference for my own implementations
 
 // =============================================================================
 //  An Entity in the world.
