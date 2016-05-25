@@ -1,4 +1,4 @@
-
+// Taken from Gabriel Gambetta's excellent article, used as a reference for my own implementations
 
 // =============================================================================
 //  An Entity in the world.
