@@ -5,8 +5,6 @@ server = socket.bind("*", 5005)
 
 connections = {}
 
-ID = 0
-
 SYNC = {}
 
 SYNC.square1 = {x=50,y=50,w=100,h=100,vx=0,vy=0}
@@ -24,36 +22,21 @@ function send(client, ...)
 	client:send(s.."\r\n")
 end
 
-previous_time = socket.gettime()
+previous_time = 0
 
 while true do
 	socket.select(nil,nil,0.01)
 	
 	current_time = socket.gettime()
-	dt = (current_time - previous_time)
+	dt = (current_time - previous_time)/1000
 	
 	previous_time = current_time
 	client = server:accept()
-	
-	if dt > 0.02 then
-		print("DT TOO LARGE "..dt)
-	end
-
-	
-	print("dt = "..dt)
-	
-	for k,v in pairs(SYNC) do
-		v.x = v.x + (v.vx * dt)
-		v.y = v.y + (v.vy * dt)
-	end
 	
 	if client then
 		print("got a client!")
 		table.insert(connections, client)
 		client:settimeout(0)
-		ID = ID + 1
-		send(client, "CONNECT", "id="..ID)
-		
 		for k,v in pairs(SYNC) do
 			send(client, "ADD_OBJ", "UUID="..k,
 				"x="..v.x,
@@ -98,5 +81,10 @@ while true do
 		end	
 	end
 	
+	print("dt = "..dt)
 	
+	for k,v in pairs(SYNC) do
+		v.x = v.x + (v.vx * dt)
+		v.y = v.y + (v.vy * dt)
+	end
 end

@@ -20,14 +20,10 @@ function love.draw()
 end
 
 function insertSort(arr)
-	for i = 2,(#arr-1) do
+	for i = 2,#arr do
 		x = arr[i]
 		j = i - 1
-		while j >= 0 and arr[j].timestamp < x.timestamp do -- we need to iterate back to front later!
-			arr[j+1] = arr[j]
-			j = j - 1
-		end
-		arr[j+1] = x
+		while j >= 0 and arr[j].timestamp 
 	end
 end
 
@@ -43,24 +39,7 @@ function love.update(dt)
 	if not msg and err == "closed" then love.quit() end
 	if msg then
 		print("Got msg of "..msg)
-		local packet = processServerMessage(msg)
-		
-		if packet.opcode == "CONNECT" then
-			ID = packet.id
-		end
-	end
-	
-	insertSort(packets)
-	
-	for i = #packets,1,-1 do
-		local packet = packets[i]
-		
-		local dif = TIME - packet.timestamp
-		
-		if dif >= 0.1 or packet.opcode == "CONNECT" then
-			handlePacket(packet)
-			table.remove(packets, i)
-		end
+		processServerMessage(msg)
 	end
 	
 	-- sort (packets)
@@ -91,10 +70,9 @@ function processServerMessage(msg)
 	opcode = parts[1]
 	
 	args.opcode = opcode
-	args.obj_args = obj_args
 	table.insert(packets, args)
 	
-	return args
+	
 end
 
 function handlePacket(packet)
@@ -115,6 +93,6 @@ end
 function love.keypressed(key)
 	if key == "2" then
 		print("Sending message!")
-		client:send("UPDATE_SYNC;UUID=square"..ID..";key=vy;value=-10".."\r\n")
+		client:send("UPDATE_SYNC;UUID=square2;key=vy;value=-10".."\r\n")
 	end
 end

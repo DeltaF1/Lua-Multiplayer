@@ -51,8 +51,8 @@ while true do
 		print("got a client!")
 		table.insert(connections, client)
 		client:settimeout(0)
-		ID = ID + 1
-		send(client, "CONNECT", "id="..ID)
+		
+		client:send("CONNECT;id="..ID)
 		
 		for k,v in pairs(SYNC) do
 			send(client, "ADD_OBJ", "UUID="..k,

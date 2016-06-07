@@ -5,8 +5,6 @@ server = socket.bind("*", 5005)
 
 connections = {}
 
-ID = 0
-
 SYNC = {}
 
 SYNC.square1 = {x=50,y=50,w=100,h=100,vx=0,vy=0}
@@ -51,9 +49,6 @@ while true do
 		print("got a client!")
 		table.insert(connections, client)
 		client:settimeout(0)
-		ID = ID + 1
-		send(client, "CONNECT", "id="..ID)
-		
 		for k,v in pairs(SYNC) do
 			send(client, "ADD_OBJ", "UUID="..k,
 				"x="..v.x,

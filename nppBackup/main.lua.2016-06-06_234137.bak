@@ -57,7 +57,7 @@ function love.update(dt)
 		
 		local dif = TIME - packet.timestamp
 		
-		if dif >= 0.1 or packet.opcode == "CONNECT" then
+		if dif >= 0.1 then
 			handlePacket(packet)
 			table.remove(packets, i)
 		end
